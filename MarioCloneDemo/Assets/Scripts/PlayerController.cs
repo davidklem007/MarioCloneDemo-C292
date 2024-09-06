@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        Vector3 position = transform.position;
     }
 
     // Update is called once per frame
