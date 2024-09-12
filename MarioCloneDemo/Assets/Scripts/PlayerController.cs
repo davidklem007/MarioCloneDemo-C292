@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce;
 
     private Rigidbody2D rb;
+    private bool hasCollided = false;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         Move();
         if (Input.GetButtonDown("Jump"))
         {
@@ -37,6 +39,27 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         //(0,1)
-        rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+
+        if (hasCollided)
+        {
+            rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+        }
+    }
+        
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "platform")
+        {
+            hasCollided = true;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "platform")
+        {
+            hasCollided = false;
+        }
     }
 }
